@@ -11,7 +11,7 @@ npm install --save hypertopic
 1. Set the services to be called:
 
 ```js
-const Hypertopic = require('./index.js');
+const Hypertopic = require('hypertopic');
 
 db = new Hypertopic([
   "http://argos2.hypertopic.org",
