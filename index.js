@@ -1,10 +1,9 @@
-const concat = require('async/concat');
-const request = require('request'); 
+const fetch = require('node-fetch');
 const objectPath = require("object-path");
 
 module.exports = function Hypertopic(services) {
 
-  this.getView = function(paths, callback) {
+  this.getView = function(paths) {
     paths = (paths instanceof Array)? paths : [paths];
     var uris = paths.map(function(p) {
       return encodeURI(p);
@@ -14,23 +13,17 @@ module.exports = function Hypertopic(services) {
       });
     });
     uris = [].concat.apply([], uris);
-    concat(uris, _get, function(err, data) {
-      callback(_index(data));
-    });
+    return Promise.all(uris.map(_get))
+      .then(l => l.reduce(_concat, []))
+      .then(_index);
   }
 
   return this;
 };
 
-const _get = function(url, callback) {
-  request(url, function(error, response, body) {
-    var rows = [];
-    if (!error && response.statusCode == 200) {
-      rows = JSON.parse(body).rows;
-    } // Ignore errors
-    callback(null, rows);
-   });
-}
+const _get = (uri) => fetch(uri).then(x => x.json());
+
+const _concat = (l, x) => l.concat(x.rows);
 
 /**
  * Test case:
