@@ -18,6 +18,28 @@ module.exports = function Hypertopic(services) {
       .then(_index);
   }
 
+  const _fetch = (id, request, success) => fetch(services[0] + '/' + id, request)
+    .then(x => {
+      if (x.ok) {
+        return x.json();
+      }
+      throw new Error(x.statusText);
+    })
+    .then(x => success(x));
+
+  this.get = (o) => _fetch(o._id, {}, x => x);
+
+  this.post = (o) => _fetch('', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(o)
+  }, x => Object.assign(o, {_id: x.id, _rev: x.rev}));
+
+  this.delete = (o) => _fetch(o._id, {
+    method: 'DELETE',
+    headers: {'If-Match': o._rev}
+  }, x => ({_id: x.id, _rev: x.rev}));
+
   return this;
 };
 

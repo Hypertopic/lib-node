@@ -8,20 +8,21 @@ npm install --save hypertopic
 
 ## Use
 
-1. Set the services to be called:
+### Set the services to be called
 
 ```js
 const hypertopic = require('hypertopic');
 
 let db = hypertopic([
-  "http://argos2.hypertopic.org",
+  "http://argos2.test.hypertopic.org",
   "http://steatite.hypertopic.org"
 ]);
 
 const _log = (x) => console.log(JSON.stringify(x, null, 2));
+const _error = (x) => console.error(x.message);
 ```
 
-2. Send distributed requests
+### Send distributed requests
 
 - on a user
 
@@ -68,3 +69,49 @@ db.getView('/user/vitraux')
   .then(db.getView)
   .then(_log);
 ```
+
+### Update objects
+
+- Create an object (with an automatic ID)
+
+```js
+db.post({item_name:'Bond', item_corpus:'TEST'})
+  .then(_log)
+  .catch(_error);
+```
+
+- Create an object with a given ID
+
+```js
+db.post({_id:'007', item_name:'Bond', item_corpus:'TEST'})
+  .then(_log)
+  .catch(_error);
+```
+
+- Update an object
+
+```js
+db.get({_id:'007'})
+  .then(x => Object.assign(x, {item_name:'James Bond'}))
+  .then(db.post)
+  .then(_log)
+  .catch(_error);
+```
+
+- Delete an object with update conflict detection
+
+```js
+db.delete({_id:'007', _rev='1-xxxxxxxxx'});
+  .then(_log)
+  .catch(_error);
+```
+
+- Delete an object with no conflict detection (to be used with caution!)
+
+```js
+db.get({_id:'007'})
+  .then(db.delete)
+  .then(_log)
+  .catch(_error);
+```
+
