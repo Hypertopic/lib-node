@@ -27,7 +27,7 @@ const _error = (x) => console.error(x.message);
 - on a user
 
 ```js
-db.getView('/user/aaf')
+db.getView('/user/vitraux')
   .then(_log);
 ```
 - on an item
@@ -101,7 +101,7 @@ db.get({_id:'007'})
 - Delete an object with update conflict detection
 
 ```js
-db.delete({_id:'007', _rev='1-xxxxxxxxx'});
+db.delete({_id:'007', _rev:'1-xxxxxxxxx'})
   .then(_log)
   .catch(_error);
 ```
