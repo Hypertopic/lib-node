@@ -32,11 +32,13 @@ module.exports = function Hypertopic(services) {
   this.post = (o) => _fetch('', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
+    credentials: 'include',
     body: JSON.stringify(o)
   }, x => Object.assign(o, {_id: x.id, _rev: x.rev}));
 
   this.delete = (o) => _fetch(o._id, {
     method: 'DELETE',
+    credentials: 'include',
     headers: {'If-Match': o._rev}
   }, x => ({_id: x.id, _rev: x.rev}));
 
