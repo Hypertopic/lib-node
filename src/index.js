@@ -45,7 +45,9 @@ module.exports = function Hypertopic(services) {
   return this;
 };
 
-const _get = (uri) => fetch(uri).then(x => x.json());
+const _get = (uri) => fetch(uri)
+  .then(x => x.json())
+  .catch(_ => ({rows:[]}));
 
 const _concat = (l, x) => l.concat(x.rows);
 
