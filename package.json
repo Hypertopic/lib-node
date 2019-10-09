@@ -4,8 +4,7 @@
   "description": "Client library for the Hypertopic protocol.",
   "main": "lib/index.js",
   "scripts": {
-    "compile": "babel -d lib/ src/",
-    "prepublish": "npm run compile"
+    "prepublish": "babel -d lib/ src/"
   },
   "keywords": [
     "hypertopic",
