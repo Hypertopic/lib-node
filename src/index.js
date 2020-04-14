@@ -51,13 +51,6 @@ const _get = (uri) => fetch(uri)
 
 const _concat = (l, x) => l.concat(x.rows);
 
-/**
- * Test case:
- *
- *     let o1 = {b:["c"]};
- *     let o2 = {b:"d", e:"f"};
- *     JSON.stringify(_assign(o1, o1)) === JSON.stringify({b:["c","d"], e:["f"]});     
- */
 const _assign = function(target, source) {
   for (var k in source) {
     if (k[0] !== '_' && !['Sans nom', '', ' '].includes(source[k])) {
@@ -71,16 +64,6 @@ const _assign = function(target, source) {
   }
 }
  
-/** 
- * Test case:
- *
- *     let rows = [{
- *       {key:["a"], value:{b:"c"}},
- *       {key:["a"], value:{b:"d"}},
- *       {key:["a","e"], value:{f:"g"}}
- *     }];
- *     JSON.stringify(_index(rows)) === JSON.stringify({a:{b:["c","d"], e:{f:"g"}}}); 
- */
 const _index = function(rows) {
   var data = {};
   rows.forEach(function(r) {
