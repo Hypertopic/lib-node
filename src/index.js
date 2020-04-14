@@ -53,13 +53,16 @@ const _concat = (l, x) => l.concat(x.rows);
 
 const _assign = function(target, source) {
   for (var k in source) {
-    if (k[0] !== '_' && !['Sans nom', '', ' '].includes(source[k])) {
+    if (k[0] !== '_') {
       if (!target[k]) {
         target[k] = [];
-      } else if (target[k].includes(source[k])) {
-        continue;
       }
-      target[k].push(source[k]);
+      let values = source[k];
+      values = Array.isArray(values)? values : [values];
+      for (var v of values) {
+        if (['Sans nom', '', ' '].includes(v) || target[k].includes(v)) continue;
+        target[k].push(v);
+      }
     }
   }
 }
