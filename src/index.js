@@ -51,28 +51,42 @@ const _get = (uri) => fetch(uri)
 
 const _concat = (l, x) => l.concat(x.rows);
 
-const _assign = function(target, source) {
-  for (var k in source) {
-    if (k[0] !== '_') {
-      if (!target[k]) {
-        target[k] = [];
-      }
-      let values = source[k];
-      values = Array.isArray(values)? values : [values];
-      for (var v of values) {
-        if (['Sans nom', '', ' '].includes(v) || target[k].includes(v)) continue;
-        target[k].push(v);
-      }
+const _ensureExists =
+  (data, path, value) => objectPath.ensureExists(data, path, value) || value;
+
+const _assign = function(data, row) {
+  let source = row.value;
+  switch (typeof source) {
+    case 'number': {
+      let target = _ensureExists(data, row.key, []);
+      target.push(source);
+      break;
     }
+    case 'object': {
+      let target = _ensureExists(data, row.key, {});
+      for (var k in source) {
+        if (k[0] !== '_') {
+          if (!target[k]) {
+            target[k] = [];
+          }
+          let values = source[k];
+          values = Array.isArray(values)? values : [values];
+          for (var v of values) {
+            if (['Sans nom', '', ' '].includes(v) || target[k].includes(v)) continue;
+            target[k].push(v);
+          }
+        }
+      }
+      break;
+    }
+    default: console.error(`Type ${typeof source} not handled!`);
   }
 }
  
 const _index = function(rows) {
   var data = {};
   rows.forEach(function(r) {
-    var key = r.key;
-    objectPath.ensureExists(data, key, {});
-    _assign(objectPath.get(data, key), r.value);
+    _assign(data, r);
   });
   return data;
 }
