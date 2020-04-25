@@ -75,7 +75,8 @@ db.getView('/user/vitraux')
 - Create an object (with an automatic ID)
 
 ```js
-db.post({item_name:'Bond', item_corpus:'TEST'})
+db.auth('alice', 'whiterabbit')
+  .post({item_name:'Bond', item_corpus:'TEST'})
   .then(_log)
   .catch(_error);
 ```
@@ -83,7 +84,8 @@ db.post({item_name:'Bond', item_corpus:'TEST'})
 - Create an object with a given ID
 
 ```js
-db.post({_id:'007', item_name:'Bond', item_corpus:'TEST'})
+db.auth('alice', 'whiterabbit')
+  .post({_id:'007', item_name:'Bond', item_corpus:'TEST'})
   .then(_log)
   .catch(_error);
 ```
@@ -91,7 +93,8 @@ db.post({_id:'007', item_name:'Bond', item_corpus:'TEST'})
 - Update an object
 
 ```js
-db.get({_id:'007'})
+db.auth('alice', 'whiterabbit')
+  .get({_id:'007'})
   .then(x => Object.assign(x, {item_name:'James Bond'}))
   .then(db.post)
   .then(_log)
@@ -101,7 +104,8 @@ db.get({_id:'007'})
 - Delete an object with update conflict detection
 
 ```js
-db.delete({_id:'007', _rev:'1-xxxxxxxxx'})
+db.auth('alice', 'whiterabbit')
+  .delete({_id:'007', _rev:'1-xxxxxxxxx'})
   .then(_log)
   .catch(_error);
 ```
@@ -109,7 +113,8 @@ db.delete({_id:'007', _rev:'1-xxxxxxxxx'})
 - Delete an object with no conflict detection (to be used with caution!)
 
 ```js
-db.get({_id:'007'})
+db.auth('alice', 'whiterabbit')
+  .get({_id:'007'})
   .then(db.delete)
   .then(_log)
   .catch(_error);

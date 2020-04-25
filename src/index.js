@@ -31,7 +31,7 @@ module.exports = function Hypertopic(services) {
 
   this.post = (o) => _fetch('', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: headers({'Content-Type': 'application/json'}),
     credentials: 'include',
     body: JSON.stringify(o)
   }, x => Object.assign(o, {_id: x.id, _rev: x.rev}));
@@ -39,8 +39,18 @@ module.exports = function Hypertopic(services) {
   this.delete = (o) => _fetch(o._id, {
     method: 'DELETE',
     credentials: 'include',
-    headers: {'If-Match': o._rev}
+    headers: headers({'If-Match': o._rev})
   }, x => ({_id: x.id, _rev: x.rev}));
+
+  headers = (additional) => (!this.credentials) ? additional
+    : Object.assign({}, additional, {
+      'Authorization': 'Basic ' + Buffer.from(`${this.credentials.name}:${this.credentials.password}`).toString('base64')
+    });
+
+  this.auth = (name, password) => {
+    this.credentials = {name, password};
+    return this;
+  };
 
   return this;
 };
