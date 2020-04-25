@@ -42,6 +42,11 @@ module.exports = function Hypertopic(services) {
     headers: headers({'If-Match': o._rev})
   }, x => ({_id: x.id, _rev: x.rev}));
 
+  this.item = (o) => new Item (
+    this,
+    this.get(o).catch(x => ({_id: o._id, item_corpus: o.item_corpus}))
+  );
+
   headers = (additional) => (!this.credentials) ? additional
     : Object.assign({}, additional, {
       'Authorization': 'Basic ' + Buffer.from(`${this.credentials.name}:${this.credentials.password}`).toString('base64')
@@ -51,6 +56,40 @@ module.exports = function Hypertopic(services) {
     this.credentials = {name, password};
     return this;
   };
+
+  function Item(db, item) {
+
+    this.setAttributes = (attributes) => item
+      .then(o => Object.assign(o, attributes))
+      .then(db.post);
+
+    this.unsetAttribute = (key) => item
+      .then((o) => {
+        delete o[key];
+        return o;
+      })
+      .then(db.post);
+
+    this.setTopic = (topic, viewpoint) => item
+      .then(o => {
+        o.topics = o.topics || {};
+        o.topics[topic] = {viewpoint};
+        return o;
+      })
+      .then(db.post);
+
+    this.unsetTopic = (topic_id) => item
+      .then((o) => {
+        if (o.topics)
+          delete o.topics[topic_id];
+        return o;
+      })
+      .then(db.post);
+
+    this.then = x => item.then(x);
+
+    return this;
+  }
 
   return this;
 };

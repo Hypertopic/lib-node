@@ -70,7 +70,7 @@ db.getView('/user/vitraux')
   .then(_log);
 ```
 
-### Update objects
+### Update objects with generic methods
 
 - Create an object (with an automatic ID)
 
@@ -120,3 +120,36 @@ db.auth('alice', 'whiterabbit')
   .catch(_error);
 ```
 
+### Update (or create) Hypertopic objects (experimental)
+
+```js
+db.auth('alice', 'whiterabbit')
+  .item({_id:'007', item_corpus:'agents'})
+  .setAttributes({item_name:'James Bond', weapon:'Walther PPK'})
+  .then(_log)
+  .catch(_error);
+```
+
+```js
+db.auth('alice', 'whiterabbit')
+  .item({_id:'007', item_corpus:'agents'})
+  .unsetAttribute('weapon')
+  .then(_log)
+  .catch(_error);
+```
+
+```js
+db.auth('alice', 'whiterabbit')
+  .item({_id:'007', item_corpus:'agents'})
+  .setTopic('topic-octopussy', 'viewpoint-missions')
+  .then(_log)
+  .catch(_error);
+```
+
+```js
+db.auth('alice', 'whiterabbit')
+  .item({_id:'007', item_corpus:'agents'})
+  .unsetTopic('topic-octopussy')
+  .then(_log)
+  .catch(_error);
+```
