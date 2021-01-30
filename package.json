@@ -28,5 +28,12 @@
     "@babel/preset-env": "^7.6.2",
     "jest": "^25.3.0",
     "rewire": "^5.0.0"
+  },
+  "babel": {
+    "presets": [[
+      "@babel/preset-env", {
+        "modules": false
+      }
+    ]]
   }
 }
