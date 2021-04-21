@@ -14,8 +14,8 @@ npm install --save hypertopic
 const hypertopic = require('hypertopic');
 
 let db = hypertopic([
-  "http://argos2.test.hypertopic.org",
-  "http://steatite.hypertopic.org"
+  "https://argos.utt.fr",
+  "https://steatite.utt.fr"
 ]);
 
 const _log = (x) => console.log(JSON.stringify(x, null, 2));
