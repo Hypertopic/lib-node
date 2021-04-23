@@ -1,5 +1,9 @@
 # Client library for the Hypertopic protocol
 
+## Requirements
+
+- Install and run [Argos](https://github.com/Hypertopic/Argos) (on port 80) with test data.
+
 ## Install 
 
 ```shell
@@ -14,7 +18,7 @@ npm install --save hypertopic
 const hypertopic = require('hypertopic');
 
 let db = hypertopic([
-  "https://argos.utt.fr",
+  "http://localhost",
   "https://steatite.utt.fr"
 ]);
 
