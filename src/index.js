@@ -36,6 +36,19 @@ module.exports = function Hypertopic(services) {
     body: JSON.stringify(o)
   }, x => Object.assign(o, {_id: x.id, _rev: x.rev}));
 
+  this.put = (o) => _fetch(o._id, {
+    method: 'PUT',
+    headers: headers(
+      {
+        'Content-Type': 'application/pdf',
+        'Accept': '*/*',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive'
+      }),
+    credentials: 'include',
+    body: o
+  }, x => Object.assign(o, {_id: x.id, _rev: x.rev}));
+
   this.delete = (o) => _fetch(o._id, {
     method: 'DELETE',
     credentials: 'include',
