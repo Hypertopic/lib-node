@@ -1,6 +1,6 @@
 {
   "name": "hypertopic",
-  "version": "3.4.5",
+  "version": "3.4.6",
   "description": "Client library for the Hypertopic protocol.",
   "main": "lib/index.js",
   "scripts": {
