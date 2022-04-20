@@ -86,6 +86,19 @@ module.exports = function Hypertopic(services) {
       })
       .then(db.post);
 
+    this.setResource = (resource_id, content_type, raw_data) => item
+      .then(o => ({
+        ...o,
+        _attachments: {
+          ...o._attachments,
+          [resource_id]: {
+            content_type,
+            data: Buffer.from(raw_data).toString('base64')
+          }
+        }
+      }))
+      .then(db.post)
+
     this.then = x => item.then(x);
 
     return this;

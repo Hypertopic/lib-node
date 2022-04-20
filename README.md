@@ -157,3 +157,11 @@ db.auth('alice', 'whiterabbit')
   .then(_log)
   .catch(_error);
 ```
+
+```js
+db.auth('alice', 'whiterabbit')
+  .item({_id:'007', item_corpus:'agents'})
+  .setResource('hello.txt', 'text/plain', 'My name is Bond, James Bond.')
+  .then(_log)
+  .catch(_error);
+```
