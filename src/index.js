@@ -99,6 +99,15 @@ module.exports = function Hypertopic(services) {
       }))
       .then(db.post)
 
+    this.unsetResource = (resource_id) => item
+      .then(o => {
+        if (o._attachments) {
+          delete o._attachments[resource_id];
+        }
+        return o;
+      })
+      .then(db.post);
+
     this.then = x => item.then(x);
 
     return this;
