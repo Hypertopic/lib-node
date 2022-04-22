@@ -7,7 +7,7 @@
 ## Install 
 
 ```shell
-npm install --save hypertopic
+npm install hypertopic
 ```
 
 ## Use
@@ -66,10 +66,10 @@ db.getView(['/corpus/Vitraux - Bénel','/corpus/Vitraux - Recensement'])
 
 ```js
 db.getView('/user/vitraux')
-  .then(x =>
-    x.vitraux.viewpoint.map(y => `/viewpoint/${y.id}`)
-      .concat(x.vitraux.corpus.map(y => `/corpus/${y.id}`))
-  )
+  .then(x => [
+    ...x.vitraux.viewpoint.map(y => `/viewpoint/${y.id}`),
+    ...x.vitraux.corpus.map(y => `/corpus/${y.id}`)
+  ])
   .then(db.getView)
   .then(_log);
 ```
@@ -126,6 +126,8 @@ db.auth('alice', 'whiterabbit')
 
 ### Update (or create) Hypertopic objects (experimental)
 
+- Item attributes
+
 ```js
 db.auth('alice', 'whiterabbit')
   .item({_id:'007', item_corpus:'agents'})
@@ -141,6 +143,8 @@ db.auth('alice', 'whiterabbit')
   .then(_log)
   .catch(_error);
 ```
+
+- Item topics
 
 ```js
 db.auth('alice', 'whiterabbit')
@@ -158,6 +162,8 @@ db.auth('alice', 'whiterabbit')
   .catch(_error);
 ```
 
+- Item resources
+
 ```js
 db.auth('alice', 'whiterabbit')
   .item({_id:'007', item_corpus:'agents'})
@@ -173,6 +179,8 @@ db.auth('alice', 'whiterabbit')
   .then(_log)
   .catch(_error);
 ```
+
+- Item links
 
 ```js
 db.auth('alice', 'whiterabbit')
