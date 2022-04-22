@@ -115,6 +115,17 @@ module.exports = function Hypertopic(services) {
       }))
       .then(db.post);
 
+    this.unsetLink = (relation, corpus, item_id) => item
+      .then((o) => ({
+        ...o,
+        items: (o.items || []).filter(x =>
+          x.id !== item_id
+          || x.corpus !== corpus
+          || x.relation !== relation
+        )
+      }))
+      .then(db.post);
+
     this.then = x => item.then(x);
 
     return this;
