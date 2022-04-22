@@ -108,6 +108,13 @@ module.exports = function Hypertopic(services) {
       })
       .then(db.post);
 
+    this.setLink = (relation, corpus, item_id) => item
+      .then(o => ({
+        ...o,
+        items: [...(o.items || []), {corpus, id: item_id, relation}]
+      }))
+      .then(db.post);
+
     this.then = x => item.then(x);
 
     return this;

@@ -173,3 +173,11 @@ db.auth('alice', 'whiterabbit')
   .then(_log)
   .catch(_error);
 ```
+
+```js
+db.auth('alice', 'whiterabbit')
+  .item({_id:'007', item_corpus:'agents'})
+  .setLink('has for superior', 'executives', 'M')
+  .then(_log)
+  .catch(_error);
+```
