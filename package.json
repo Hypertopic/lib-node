@@ -27,7 +27,7 @@
     "@babel/cli": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "jest": "^27.4.3",
-    "rewire": "^3.0.2"
+    "rewire": "^6.0.0"
   },
   "babel": {
     "presets": [
